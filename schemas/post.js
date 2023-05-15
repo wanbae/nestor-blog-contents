@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineField, defineType, fieldNeedsEscape} from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -18,36 +18,58 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'subtitle',
+      title: 'Sub Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: {type: 'author'},
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
+      name: 'content',
+      title: 'Content',
+      type: 'blockContent',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'createdAt',
+      title: 'Created at',
+      type: 'datetime',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'thumbnail',
+      title: 'Thumbnail',
       type: 'image',
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: 'alt',
+          title: 'alt',
+          type: 'string',
+          options: {
+            isHighlighted: true,
+          },
+          validation: (Rule) => Rule.required(),
+        },
+      ],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'tag',
+      title: 'Tag',
+      type: 'reference',
+      to: {type: 'tag'},
     }),
   ],
 

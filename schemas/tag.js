@@ -1,34 +1,31 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'author',
-  title: 'Author',
+  name: 'tag',
+  title: 'Tag',
   type: 'document',
   fields: [
     defineField({
-      name: 'name',
-      title: 'Name',
-      type: 'string',
-    }),
-    defineField({
-      name: 'role',
-      title: 'Role',
+      name: 'title',
+      title: 'Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
       options: {
-        hotspot: true,
+        source: 'title',
+        maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
     select: {
-      title: 'name',
-      media: 'image',
+      title: 'title',
+      subtitle: 'slug.current',
     },
   },
 })
